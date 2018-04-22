@@ -48,18 +48,23 @@ class HomePage extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <label>排序：</label><select><option>评分</option><option>时间</option></select>
+          <label>排序：</label><select className="select-input"><option>评分</option><option>时间</option></select>
         </header>
         <div className="App-main">
           <ul className="post-list">
             {
               this.state.posts.map((post) => {
                 return (<li key={post.id}>
+                  <div className="post-header">
+                    <img src={require('../cc-head.png')}/>
+                    <span>{post.author}</span>
+                    <span>{post.timestamp}</span>
+                  </div>
                   <div className="post-title">{post.title}</div>
-                  <div className="post-author">{post.author}</div>
-                  <div className="post-body">{post.body}</div>
-                  <i><Link to='/detail'>详情</Link></i>
-                  <i>类型：<Link to='/category'>{post.category}</Link></i>
+                  <div className="post-profile">{post.body}</div>
+                  <span className="vote-score"><img src={require('../love.png')}/>{post.voteScore}</span>
+                  <Link to='/detail' className="detail-tab"><img src={require('../detail-icon.png')}/></Link>
+                  <Link to='/category' className="type-tab">{post.category}</Link>
                 </li>)
               })
             }

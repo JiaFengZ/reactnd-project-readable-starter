@@ -1,16 +1,32 @@
-.App {
-  text-align: center;
+body {
+  font-size: 14px;
+  height: 100%;
+  font-family: Microsoft YaHei, WenQuanYi Micro Hei, sans-serif;
 }
 
+#root {
+  margin: 0 auto;
+}
+
+#root, .App {
+  height: 100%;
+}
+
+img {
+  vertical-align: middle;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
 .App-header {
-  background-color: #eee;
   padding: 20px;
+  height: 80px;
+  box-sizing: border-box;
   color: #333;
+  border-bottom: solid 1px #ddd;
+  box-shadow: 0 2px 2px rgba(238, 238, 238, 0.5);
 }
 
 .App-title {
@@ -19,6 +35,14 @@
 
 .App-intro {
   font-size: large;
+} 
+
+.select-input {
+  height: 35px;
+  min-width: 100px;
+  border: solid 1px #ddd;
+  border-radius: 4px;
+  background: #eee;
 }
 
 @keyframes App-logo-spin {
@@ -28,11 +52,14 @@
 
 .App-main {
   display: flex;
+  height: calc(100% - 80px);
   padding: 10px;
+  overflow: auto;
 }
 
 .post-list {
   list-style: none;
+  padding: 0;
   width: 100%;
   text-align: left;
 }
@@ -41,4 +68,64 @@
   border-bottom: solid 1px #eee;
   margin: 10px 0;
   padding: 5px;
+}
+
+.post-header > span:nth-of-type(1) {
+  margin: 0 10px;
+  color: #333;
+}
+
+.post-header > span:nth-of-type(2) {
+  color: #888;
+}
+
+.post-title {
+  font-weight: bold;
+  color: #333;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.post-profile {
+  margin: 10px 0;
+  color: #555;
+}
+
+.vote-score {
+  color: #888;
+  font-size: 12px;
+}
+
+.detail-tab {
+  margin: 0 5px;
+}
+
+.type-tab {
+  display: inline-block;
+  min-width: 45px;
+  height: 25px;
+  line-height: 25px;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #fff;
+  background: #ea6f5a;
+  text-align: center;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.post-detail {
+  padding: 20px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 650px) {
+  #root {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 650px) {
+  #root {
+    width: 650px;
+  }
 }

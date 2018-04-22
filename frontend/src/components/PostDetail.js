@@ -4,6 +4,12 @@ import './App.css';
 class PostDetail extends Component {
   state = {
     post: {
+      timestamp: new Date().getTime(),
+      title: '我是帖子',
+      author: 'zjf',
+      category: 'react',
+      voteScore: 100,
+      deleted: false,
       body: "hjghdjghjghfjghfjghjh后果会很孤鸿寡鹄孤鸿寡鹄孤鸿寡鹄红歌会金刚经金刚经呱唧呱唧呱唧呱唧就感觉感觉湖广会馆湖广会馆和韩庚韩庚韩庚韩庚韩寒"
     }
   }
@@ -12,24 +18,27 @@ class PostDetail extends Component {
     const post = this.state.post;
     return (
       <div className="post-detail">
+        <p className="post-header">
+          <img src={require('../cc-head.png')}/>
+          <span>{post.author}</span>
+          <span>{post.timestamp}</span>
+        </p>
+        <p className="post-title">{post.title}</p>
+        <p className="vote-score"><img src={require('../love.png')}/>{post.voteScore}</p>
         <p className="post-content">
           {post.body}
         </p>
-        <div class="post-comment">
-          <h2 class="comment-title">
+        <div className="post-comment">
+          <h2 className="comment-title">
             <span>评论</span>
-            <span class="comment-total"></span>
+            <span className="comment-total"></span>
           </h2>
-          <div class="comment-reply">
-            <img src=""  class="user-avatar"/>
-            <textarea class="comment-input" name="" id="" cols="30" rows="10"></textarea>
-            <button class="js-add-comment">发表评论</button>
-            <div class="user-logout">
-              <span class="user-name">cover</span>
-              <a href="" class="js-logout">登出</a>
-            </div>
+          <div className="comment-reply">
+            <img src=""  className="user-avatar"/>
+            <textarea className="comment-input" name="" id="" cols="30" rows="10"></textarea>
+            <button className="js-add-comment">发表评论</button>
           </div>
-          <ul class="comment-list"></ul>
+          <ul className="comment-list"></ul>
         </div>
       </div>
     );
