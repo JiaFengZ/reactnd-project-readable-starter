@@ -119,6 +119,39 @@ img {
   margin: 0 auto;
 }
 
+.edit-btns {
+  float: right;
+}
+.edit-btns > button {
+  cursor: pointer;
+  color: #fff;
+  background: #eee;
+  border-radius: 2px;
+  padding: 0 10px;
+  margin: 5px;
+  border: none;
+  height: 25px;
+}
+.edit-btns > button:hover {
+  background: #f5ebeb;
+}
+.comment-input {
+  border: solid 1px #ddd;
+  border-radius: 2px;
+  vertical-align: bottom;
+}
+
+.js-add-comment {
+  cursor: pointer;
+  color: #fff;
+  background: #ea6f5a;
+  border-radius: 2px;
+  padding: 0 10px;
+  margin: 5px;
+  border: none;
+  height: 25px;
+}
+
 @media screen and (max-width: 650px) {
   #root {
     width: 100%;

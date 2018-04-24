@@ -46,6 +46,7 @@ class PostCategory extends Component {
   render() {
     return (
       <div className="category-container">
+          <p><span className="type-tab">React</span></p>
           <ul className="post-list">
             {
               this.state.posts.map((post) => {
