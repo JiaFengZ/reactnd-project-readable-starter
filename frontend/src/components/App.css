@@ -6,36 +6,33 @@ body {
 
 #root {
   margin: 0 auto;
+  padding: 20px;
 }
 
-#root, .App {
+#root, .Home {
   height: 100%;
 }
 
 img {
   vertical-align: middle;
 }
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
 
 .App-header {
-  padding: 20px;
-  height: 80px;
+  padding: 10px;
+  height: 60px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
   box-sizing: border-box;
-  color: #333;
+  color: #ea6f5a;
   border-bottom: solid 1px #ddd;
   box-shadow: 0 2px 2px rgba(238, 238, 238, 0.5);
 }
 
-.App-title {
-  font-size: 1.5em;
+.App-header .nav-link {
+  float: left;
+  cursor: pointer;
 }
-
-.App-intro {
-  font-size: large;
-} 
 
 .select-input {
   height: 35px;
@@ -45,21 +42,20 @@ img {
   background: #eee;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.home-header {
+  margin: 20px 0;
 }
 
-.App-main {
+.home-main {
   display: flex;
   height: calc(100% - 80px);
-  padding: 10px;
   overflow: auto;
 }
 
 .post-list {
   list-style: none;
   padding: 0;
+  margin: 0;
   width: 100%;
   text-align: left;
 }
@@ -83,7 +79,7 @@ img {
   font-weight: bold;
   color: #333;
   line-height: 1.5;
-  font-size: 15px;
+  font-size: 1.1rem;
 }
 
 .post-profile {
@@ -93,7 +89,7 @@ img {
 
 .vote-score {
   color: #888;
-  font-size: 12px;
+  font-size: .8rem;
 }
 
 .detail-tab {
@@ -114,15 +110,10 @@ img {
   margin: 0 5px;
 }
 
-.post-detail {
-  padding: 20px;
-  margin: 0 auto;
-}
-
 .edit-btns {
   float: right;
 }
-.edit-btns > button {
+.edit-btns button {
   cursor: pointer;
   color: #fff;
   background: #eee;
@@ -139,6 +130,8 @@ img {
   border: solid 1px #ddd;
   border-radius: 2px;
   vertical-align: bottom;
+  width: 100%;
+  height: 60px;
 }
 
 .js-add-comment {
@@ -150,6 +143,39 @@ img {
   margin: 5px;
   border: none;
   height: 25px;
+}
+
+.post-edit {
+  padding: 10px;
+  margin: 10px;
+}
+
+.post-edit input, .post-edit textarea {
+  width: 100%;
+  border: solid 1px #ddd;
+  height: 35px;
+  border-radius: 1px;
+  margin: 10px 0;
+}
+
+.post-edit textarea {
+  height: 100px;
+}
+
+.post-edit button {
+  cursor: pointer;
+  color: #fff;
+  background: #ea6f5a;
+  border-radius: 2px;
+  padding: 0 10px;
+  margin: 5px;
+  border: none;
+  height: 25px;
+}
+
+.cancel-btn > a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media screen and (max-width: 650px) {

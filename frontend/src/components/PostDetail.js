@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import Header from './Header'
 import './App.css';
 
 class PostDetail extends Component {
@@ -48,13 +50,14 @@ class PostDetail extends Component {
     const post = this.state.post;
     return (
       <div className="post-detail">
+        <Header title="帖子详情" backLink="/category"/>
         <p className="post-header">
           <img src={require('../cc-head.png')}/>
           <span>{post.author}</span>
           <span>{post.timestamp}</span>
           <i className="edit-btns">
             <button><img src={require('../delete.png')}/></button>
-            <button><img src={require('../edit.png')}/></button>
+            <button><Link to='/edit'><img src={require('../edit.png')}/></Link></button>
           </i>
         </p>
         <p className="post-title">{post.title}</p>
@@ -66,7 +69,7 @@ class PostDetail extends Component {
           <h2 className="comment-title">
             <span>评论</span>
             <span className="comment-total"></span>
-            <label>排序：</label><select className="select-input"></select>
+            (排序：<select className="select-input"></select>)
           </h2>
           <div className="comment-reply">
             <img src=""  className="user-avatar"/>
@@ -75,8 +78,8 @@ class PostDetail extends Component {
           </div>
          <ul className="post-list">
             {
-              this.state.comments.map((comment) => {
-                return (<li key={post.id}>
+              this.state.comments.map((comment, index) => {
+                return (<li key={comment.id}>
                   <div className="post-header">
                     <img src={require('../cc-head.png')}/>
                     <span>{comment.author}</span>
@@ -84,6 +87,8 @@ class PostDetail extends Component {
                   </div>
                   <div className="post-profile">{comment.body}</div>
                   <span className="vote-score"><img src={require('../love.png')}/>{comment.voteScore}</span>
+                  <img style={{'marginLeft':'10px'}} src={require('../delete.png')}/>
+                  <img src={require('../edit.png')}/>
                 </li>)
               })
             }

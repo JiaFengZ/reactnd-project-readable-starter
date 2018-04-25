@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import Header from './Header'
 import logo from '../logo.svg';
 import './App.css';
 
@@ -46,11 +47,12 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="Home">
+        <Header title="所有帖子"/>
+        <header className="home-header">
           <label>排序：</label><select className="select-input"><option>评分</option><option>时间</option></select>
         </header>
-        <div className="App-main">
+        <div className="home-main">
           <ul className="post-list">
             {
               this.state.posts.map((post) => {

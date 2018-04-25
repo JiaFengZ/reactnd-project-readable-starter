@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import Header from './Header'
 import './App.css';
 
 class PostCategory extends Component {
@@ -46,7 +47,11 @@ class PostCategory extends Component {
   render() {
     return (
       <div className="category-container">
-          <p><span className="type-tab">React</span></p>
+          <Header title="React" backLink="/"/>
+          <div className="home-header">
+            <span className="type-tab">React</span>
+            <label>排序：</label><select className="select-input"><option>评分</option><option>时间</option></select>            
+          </div>
           <ul className="post-list">
             {
               this.state.posts.map((post) => {

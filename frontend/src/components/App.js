@@ -7,6 +7,7 @@ import PostEdit from './PostEdit'
 
 class App extends Component {
   state = {
+    preLink: '/',
     
   }
 
