@@ -5,45 +5,6 @@ import logo from '../logo.svg';
 import './App.css';
 
 class HomePage extends Component {
-  state = {
-    posts: [{
-      id: '1',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    },{
-      id: '2',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    },{
-      id: '3',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    },{
-      id: '5',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    }]
-  }
 
   render() {
     return (
@@ -55,7 +16,7 @@ class HomePage extends Component {
         <div className="home-main">
           <ul className="post-list">
             {
-              this.state.posts.map((post) => {
+              this.props.posts.map((post) => {
                 return (<li key={post.id}>
                   <div className="post-header">
                     <img src={require('../cc-head.png')}/>
