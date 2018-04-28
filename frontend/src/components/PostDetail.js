@@ -52,16 +52,16 @@ class PostDetail extends Component {
       <div className="post-detail">
         <Header title="帖子详情" backLink="/category"/>
         <p className="post-header">
-          <img src={require('../cc-head.png')}/>
+          <img alt="user" src={require('../cc-head.png')}/>
           <span>{post.author}</span>
           <span>{post.timestamp}</span>
           <i className="edit-btns">
-            <button><img src={require('../delete.png')}/></button>
-            <button><Link to='/edit'><img src={require('../edit.png')}/></Link></button>
+            <button><img alt="delete" src={require('../delete.png')}/></button>
+            <button><Link to='/edit'><img alt="edit" src={require('../edit.png')}/></Link></button>
           </i>
         </p>
         <p className="post-title">{post.title}</p>
-        <p className="vote-score"><img src={require('../love.png')}/>{post.voteScore}</p>
+        <p className="vote-score"><img alt="vote" src={require('../love.png')}/>{post.voteScore}</p>
         <p className="post-content">
           {post.body}
         </p>
@@ -72,7 +72,6 @@ class PostDetail extends Component {
             (排序：<select className="select-input"></select>)
           </h2>
           <div className="comment-reply">
-            <img src=""  className="user-avatar"/>
             <textarea className="comment-input" name="" id="" cols="30" rows="10"></textarea>
             <button className="js-add-comment">发表评论</button>
           </div>
@@ -81,14 +80,14 @@ class PostDetail extends Component {
               this.state.comments.map((comment, index) => {
                 return (<li key={comment.id}>
                   <div className="post-header">
-                    <img src={require('../cc-head.png')}/>
+                    <img alt="user" src={require('../cc-head.png')}/>
                     <span>{comment.author}</span>
                     <span>{comment.timestamp}</span>
                   </div>
                   <div className="post-profile">{comment.body}</div>
-                  <span className="vote-score"><img src={require('../love.png')}/>{comment.voteScore}</span>
-                  <img style={{'marginLeft':'10px'}} src={require('../delete.png')}/>
-                  <img src={require('../edit.png')}/>
+                  <span className="vote-score"><img alt="vote" src={require('../love.png')}/>{comment.voteScore}</span>
+                  <img alt="delete" style={{'marginLeft':'10px'}} src={require('../delete.png')}/>
+                  <img alt="edit" src={require('../edit.png')}/>
                 </li>)
               })
             }

@@ -6,48 +6,17 @@ import {
   DELETE_POST,
   ADD_COMMENT,
   UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  GET_ALLPOSTS
 } from '../actions'
 
-const postState = [{
-      id: '1',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    },{
-      id: '2',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    },{
-      id: '3',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    },{
-      id: '5',
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: '都好都好都好都好都好都好很多很好的'
-    }]
+const initialPostState = {
+  allPosts: []
 
-function post (state = postState, action) {
+}
+
+function post (state = initialPostState, action) {
+  const { allPosts } = action
   switch (action.type) {
     case ADD_POST:      
 
@@ -63,6 +32,11 @@ function post (state = postState, action) {
 
       return {
         ...state
+      }
+    case GET_ALLPOSTS:
+      return {
+        ...state,
+        allPosts: allPosts
       }
     default:
       return state

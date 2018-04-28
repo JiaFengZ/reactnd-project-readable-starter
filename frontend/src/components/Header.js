@@ -8,7 +8,7 @@ class Header extends Component {
   render() {
     return (
     	<div className="App-header">
-        {this.props.backLink && <Link to={this.props.backLink} className="nav-link"><img src={require('../back.png')}/></Link>}
+        {this.props.backLink && <Link to={this.props.backLink} className="nav-link"><img alt="goback" src={require('../goback.png')}/></Link>}
         <span>{this.props.title}</span>
       </div>
     )

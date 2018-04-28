@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom';
-import { addPost, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
+import { BrowserRouter } from 'react-router-dom'
+import { fetchAllPosts, addPost, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
 import HomePage from './Home'
 import PostCategory from './PostCategory'
 import PostDetail from './PostDetail'
@@ -14,12 +14,17 @@ class App extends Component {
     
   }
 
+  componentDidMount() {
+    const { fetchAllPosts } = this.props
+    fetchAllPosts()
+  }
+
   render() {
     return (
         <BrowserRouter>
           <Switch>
-              <Route exact path='/' render={() => <HomePage posts={this.props.posts}/>} />
-              <Route path='/category' render={() => <PostCategory posts={this.props.posts}/>} />
+              <Route exact path='/' render={() => <HomePage posts={this.props.posts.allPosts}/>} />
+              <Route path='/category' render={() => <PostCategory posts={this.props.posts.allPosts}/>} />
               <Route path='/detail' component={PostDetail} />
               <Route path='/edit' component={PostEdit} />
           </Switch>
@@ -43,7 +48,8 @@ function mapDispatchToProps (dispatch) {  //注册派发action的事件
     deletePost: (data) => dispatch(deletePost(data)),
     addComment: (data) => dispatch(addComment(data)),
     updateComment: (data) => dispatch(updateComment(data)),
-    deleteComment: (data) => dispatch(deleteComment(data))
+    deleteComment: (data) => dispatch(deleteComment(data)),
+    fetchAllPosts: () => dispatch(fetchAllPosts()),
   }
 }
 
