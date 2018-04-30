@@ -24,6 +24,13 @@ export function fetchAllPosts() {
   return function (dispatch) {
     //dispatch(requestPosts(subreddit)) 正在发起请求
     return API.getAllPosts()
+    .then(data => data.map((item) => {
+      if (item.timestamp) {
+        const date = new Date(item.timestamp)
+        item.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+      }
+      return item
+    }))
       .then(data =>
         dispatch(receivePosts(data)) //接收到数据
       )
@@ -40,6 +47,13 @@ function receivePostsByCategory(data) {
 export function getPostsByCategory(category) {
   return function(dispatch) {
     return API.getPostsByCategory(category)
+    .then(data => data.map((item) => {
+      if (item.timestamp) {
+        const date = new Date(item.timestamp)
+        item.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
+      }
+      return item
+    }))
     .then(data => dispatch(receivePostsByCategory(data)))
   }
 }

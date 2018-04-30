@@ -30,7 +30,7 @@ export const addPost = (post) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ post })
+    body: JSON.stringify( post )
   }).then(res => res.json())
 
 export const getPostDetail = (id) =>
@@ -54,7 +54,7 @@ export const updatePost = (id, post) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ post })
+    body: JSON.stringify( post )
   }).then(res => res.json())
 
 export const deletePost = (id) =>

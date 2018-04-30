@@ -10,10 +10,11 @@ class CategorySelect extends Component {
   selectCateGory(event) {
     this.props.selectCateGory(event.target.value)
   }
-
+  
   render() {
     return (
-      <select className="select-input" onChange={this.selectCateGory} value="">
+      
+      <select className="select-input" onChange={this.selectCateGory} value='none'>
         {this.props.categorys.map((category) => <option key={category.path} value={category.path}>{category.name}</option>)}
       </select>
     )

@@ -33,10 +33,11 @@ class App extends Component {
     return (
         <BrowserRouter>
           <Switch>
-              <Route exact path='/' render={() => <HomePage categorys={this.state.categorys} posts={this.props.post.allPosts}/>} />
+              <Route exact path='/' render={(props) => <HomePage history={props.history} categorys={this.state.categorys} posts={this.props.post.allPosts}/>} />
               <Route path='/:category/posts' render={(props) => <PostCategory match={props.match} goBack={props.history.goBack} getPosts={this.props.getPostsByCategory} posts={this.props.post.categoryPosts}/>} />
               <Route path='/posts/:id' render={(props) => <PostDetail match={props.match} goBack={props.history.goBack} getDetail={this.props.getPostDetail} getComments={this.props.getComments} comments={this.props.comment.comments} post={this.props.post.postDetail}/>}/>
               <Route path='/edit/:id' render={(props) => <PostEdit match={props.match} goBack={props.history.goBack} post={this.props.post.postDetail}  getDetail={this.props.getPostDetail}/>}/>
+              <Route path='/add' render={(props) => <PostEdit match={props.match} goBack={props.history.goBack} categorys={this.state.categorys}/>}/>
           </Switch>
         </BrowserRouter>
     )
