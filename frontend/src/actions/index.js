@@ -8,6 +8,8 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const GET_ALLPOSTS = 'GET_ALLPOSTS'
 export const GET_CATEGORYPOSTS = 'GET_CATEGORYPOSTS'
 export const GET_POSTDETAIL = 'GET_POSTDETAIL'
+export const GET_COMMENTS = 'GET_COMMENTS'
+export const UPDATE_POSTVOTE = 'UPDATE_POSTVOTE'
 
 function receivePosts(data) {
   return {
@@ -20,9 +22,7 @@ function receivePosts(data) {
 export function fetchAllPosts() {
 
   return function (dispatch) {
-
     //dispatch(requestPosts(subreddit)) 正在发起请求
-
     return API.getAllPosts()
       .then(data =>
         dispatch(receivePosts(data)) //接收到数据
@@ -58,6 +58,19 @@ export function getPostDetail(id) {
   }
 }
 
+function updatePostVote() {
+  return {
+    type: UPDATE_POSTVOTE
+  }
+}
+
+export function votePost(id, type) {
+  return function(dispatch) {
+    return API.votePost(id, type)
+    .then(data => dispatch(updatePostVote()))
+  }
+}
+
 export function addPost ({}) {
   return {
     type: ADD_POST,
@@ -73,6 +86,20 @@ export function updatePost ({}) {
 export function deletePost ({}) {
   return {
     type: DELETE_POST,
+  }
+}
+
+function receiveComments (data) {
+  return {
+    type: GET_COMMENTS,
+    comments: data
+  }
+}
+
+export function getComments(id) {
+  return function(dispatch) {
+    return API.getComments(id)
+    .then(data => dispatch(receiveComments(data)))
   }
 }
 

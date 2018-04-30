@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { getCategories }  from '../API'
-import { getPostsByCategory, fetchAllPosts, getPostDetail, addPost, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
+import { getPostsByCategory, fetchAllPosts, getPostDetail, addPost, updatePost, deletePost, getComments, addComment, updateComment, deleteComment } from '../actions'
 import HomePage from './Home'
 import PostCategory from './PostCategory'
 import PostDetail from './PostDetail'
@@ -33,10 +33,10 @@ class App extends Component {
     return (
         <BrowserRouter>
           <Switch>
-              <Route exact path='/' render={() => <HomePage categorys={this.state.categorys} posts={this.props.posts.allPosts}/>} />
-              <Route path='/:category/posts' render={(props) => <PostCategory match={props.match} goBack={props.history.goBack} getPosts={this.props.getPostsByCategory} posts={this.props.posts.categoryPosts}/>} />
-              <Route path='/posts/:id' render={(props) => <PostDetail match={props.match} goBack={props.history.goBack} getDetail={this.props.getPostDetail} post={this.props.posts.postDetail}/>}/>
-              <Route path='/edit' component={PostEdit} />
+              <Route exact path='/' render={() => <HomePage categorys={this.state.categorys} posts={this.props.post.allPosts}/>} />
+              <Route path='/:category/posts' render={(props) => <PostCategory match={props.match} goBack={props.history.goBack} getPosts={this.props.getPostsByCategory} posts={this.props.post.categoryPosts}/>} />
+              <Route path='/posts/:id' render={(props) => <PostDetail match={props.match} goBack={props.history.goBack} getDetail={this.props.getPostDetail} getComments={this.props.getComments} comments={this.props.comment.comments} post={this.props.post.postDetail}/>}/>
+              <Route path='/edit/:id' render={(props) => <PostEdit match={props.match} goBack={props.history.goBack} post={this.props.post.postDetail}  getDetail={this.props.getPostDetail}/>}/>
           </Switch>
         </BrowserRouter>
     )
@@ -46,8 +46,8 @@ class App extends Component {
 function mapStateToProps ({ post, comment }) { // state = {post: [], comment: []}
 
   return {
-    posts: post,
-    comments: comment
+    post: post,
+    comment: comment
   }
 }
 
@@ -61,7 +61,8 @@ function mapDispatchToProps (dispatch) {  //注册派发action的事件
     deleteComment: (data) => dispatch(deleteComment(data)),
     fetchAllPosts: () => dispatch(fetchAllPosts()),
     getPostsByCategory: (category) => dispatch(getPostsByCategory(category)),
-    getPostDetail: (id) => dispatch(getPostDetail(id))
+    getPostDetail: (id) => dispatch(getPostDetail(id)),
+    getComments: (id) => dispatch(getComments(id))
   }
 }
 

@@ -4,12 +4,14 @@ import {
   ADD_POST,
   UPDATE_POST,
   DELETE_POST,
+  UPDATE_POSTVOTE,
   ADD_COMMENT,
   UPDATE_COMMENT,
   DELETE_COMMENT,
   GET_ALLPOSTS,
   GET_CATEGORYPOSTS,
-  GET_POSTDETAIL
+  GET_POSTDETAIL,
+  GET_COMMENTS
 } from '../actions'
 
 const initialPostState = {
@@ -51,13 +53,21 @@ function post (state = initialPostState, action) {
         ...state,
         postDetail: postDetail
       }
+    case UPDATE_POSTVOTE:
+      return {
+        ...state,
+        voteChange: true
+      }
     default:
       return state
   }
 }
 
-const commentState = [];
+const commentState = {
+  comments: []
+}
 function comment (state = commentState, action) {
+  const { comments } = action
   switch (action.type) {
     case ADD_COMMENT:      
 
@@ -73,6 +83,11 @@ function comment (state = commentState, action) {
 
       return {
         ...state
+      }
+    case GET_COMMENTS:
+      return {
+        ...state,
+        comments: comments
       }
     default :
       return state

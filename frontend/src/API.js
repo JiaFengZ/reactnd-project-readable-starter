@@ -37,13 +37,14 @@ export const getPostDetail = (id) =>
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
 
-export const votePost = (id) =>
+export const votePost = (id, type) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({ option: type })
   }).then(res => res.json())
 
 export const updatePost = (id, post) =>

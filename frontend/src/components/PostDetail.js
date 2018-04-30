@@ -4,48 +4,14 @@ import Header from './Header'
 import './App.css';
 
 class PostDetail extends Component {
-  state = {
-    comments: [{
-      id: 1,
-      timestamp: new Date().getTime(),
-      body: '好极了乐乐乐乐乐乐乐乐乐乐',
-      author: 'zjf',
-      voteScore: 45,
-      deleted: false
-    },{
-      id: 2,
-      timestamp: new Date().getTime(),
-      body: '好极了乐乐乐乐乐乐乐乐乐乐',
-      author: 'zjf',
-      voteScore: 45,
-      deleted: false
-    },{
-      id: 3,
-      timestamp: new Date().getTime(),
-      body: '好极了乐乐乐乐乐乐乐乐乐乐',
-      author: 'zjf',
-      voteScore: 45,
-      deleted: false
-    },{
-      id: 4,
-      timestamp: new Date().getTime(),
-      body: '好极了乐乐乐乐乐乐乐乐乐乐',
-      author: 'zjf',
-      voteScore: 45,
-      deleted: false
-    }]
-  }
 
   componentDidMount() {
-    this.props.getDetail(this.props.match.params.id).then((detail) => {
-      this.setState({
-        post: detail
-      })
-    })
+    this.props.getDetail(this.props.match.params.id)
+    this.props.getComments(this.props.match.params.id)
   }
 
   render() {
-    const { post, goBack }= this.props;
+    const { post, comments, goBack }= this.props;
     return (
       <div className="post-detail">
         <Header title="帖子详情" backLink={true} goBack={goBack}/>
@@ -55,7 +21,7 @@ class PostDetail extends Component {
           <span>{post.timestamp}</span>
           <i className="edit-btns">
             <button><img alt="delete" src={require('../delete.png')}/></button>
-            <button><Link to='/edit'><img alt="edit" src={require('../edit.png')}/></Link></button>
+            <button><Link to={'/edit/'+post.id}><img alt="edit" src={require('../edit.png')}/></Link></button>
           </i>
         </p>
         <p className="post-title">{post.title}</p>
@@ -75,7 +41,7 @@ class PostDetail extends Component {
           </div>
          <ul className="post-list">
             {
-              this.state.comments.map((comment, index) => {
+              comments.map((comment, index) => {
                 return (<li key={comment.id}>
                   <div className="post-header">
                     <img alt="user" src={require('../cc-head.png')}/>
