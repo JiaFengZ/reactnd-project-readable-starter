@@ -7,16 +7,19 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   DELETE_COMMENT,
-  GET_ALLPOSTS
+  GET_ALLPOSTS,
+  GET_CATEGORYPOSTS,
+  GET_POSTDETAIL
 } from '../actions'
 
 const initialPostState = {
-  allPosts: []
-
+  allPosts: [],
+  categoryPosts: [],
+  postDetail: {}
 }
 
 function post (state = initialPostState, action) {
-  const { allPosts } = action
+  const { allPosts, categoryPosts, postDetail } = action
   switch (action.type) {
     case ADD_POST:      
 
@@ -37,6 +40,16 @@ function post (state = initialPostState, action) {
       return {
         ...state,
         allPosts: allPosts
+      }
+    case GET_CATEGORYPOSTS:
+      return {
+        ...state,
+        categoryPosts: categoryPosts
+      }
+    case GET_POSTDETAIL: 
+      return {
+        ...state,
+        postDetail: postDetail
       }
     default:
       return state

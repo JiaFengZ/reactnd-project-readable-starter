@@ -2,30 +2,40 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import { fetchAllPosts, addPost, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
+import { getCategories }  from '../API'
+import { getPostsByCategory, fetchAllPosts, getPostDetail, addPost, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
 import HomePage from './Home'
 import PostCategory from './PostCategory'
 import PostDetail from './PostDetail'
-import PostEdit from './PostEdit'
+import PostEdit from './PostEdit' 
 
 class App extends Component {
   state = {
     preLink: '/',
-    
+    categorys: []
   }
 
   componentDidMount() {
     const { fetchAllPosts } = this.props
     fetchAllPosts()
+    this.fetchCategorys()
+  }
+
+  fetchCategorys() {
+    getCategories().then((data) => {
+      this.setState({
+        categorys: data
+      })
+    })
   }
 
   render() {
     return (
         <BrowserRouter>
           <Switch>
-              <Route exact path='/' render={() => <HomePage posts={this.props.posts.allPosts}/>} />
-              <Route path='/category' render={() => <PostCategory posts={this.props.posts.allPosts}/>} />
-              <Route path='/detail' component={PostDetail} />
+              <Route exact path='/' render={() => <HomePage categorys={this.state.categorys} posts={this.props.posts.allPosts}/>} />
+              <Route path='/:category/posts' render={(props) => <PostCategory match={props.match} goBack={props.history.goBack} getPosts={this.props.getPostsByCategory} posts={this.props.posts.categoryPosts}/>} />
+              <Route path='/posts/:id' render={(props) => <PostDetail match={props.match} goBack={props.history.goBack} getDetail={this.props.getPostDetail} post={this.props.posts.postDetail}/>}/>
               <Route path='/edit' component={PostEdit} />
           </Switch>
         </BrowserRouter>
@@ -50,6 +60,8 @@ function mapDispatchToProps (dispatch) {  //注册派发action的事件
     updateComment: (data) => dispatch(updateComment(data)),
     deleteComment: (data) => dispatch(deleteComment(data)),
     fetchAllPosts: () => dispatch(fetchAllPosts()),
+    getPostsByCategory: (category) => dispatch(getPostsByCategory(category)),
+    getPostDetail: (id) => dispatch(getPostDetail(id))
   }
 }
 

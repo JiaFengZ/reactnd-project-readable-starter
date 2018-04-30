@@ -6,7 +6,8 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const GET_ALLPOSTS = 'GET_ALLPOSTS'
-
+export const GET_CATEGORYPOSTS = 'GET_CATEGORYPOSTS'
+export const GET_POSTDETAIL = 'GET_POSTDETAIL'
 
 function receivePosts(data) {
   return {
@@ -26,6 +27,34 @@ export function fetchAllPosts() {
       .then(data =>
         dispatch(receivePosts(data)) //接收到数据
       )
+  }
+}
+
+function receivePostsByCategory(data) {
+  return {
+    type: GET_CATEGORYPOSTS,
+    categoryPosts: data
+  }
+}
+
+export function getPostsByCategory(category) {
+  return function(dispatch) {
+    return API.getPostsByCategory(category)
+    .then(data => dispatch(receivePostsByCategory(data)))
+  }
+}
+
+function receivePostDetail(data) {
+  return {
+    type: GET_POSTDETAIL,
+    postDetail: data
+  }
+}
+
+export function getPostDetail(id) {
+  return function(dispatch) {
+    return API.getPostDetail(id)
+    .then(data => dispatch(receivePostDetail(data)))
   }
 }
 

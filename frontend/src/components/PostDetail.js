@@ -5,16 +5,6 @@ import './App.css';
 
 class PostDetail extends Component {
   state = {
-    post: {
-      timestamp: new Date().getTime(),
-      title: '我是帖子',
-      author: 'zjf',
-      category: 'react',
-      voteScore: 100,
-      deleted: false,
-      body: "hjghdjghjghfjghfjghjh后果会很孤鸿寡鹄孤鸿寡鹄孤鸿寡鹄红歌会金刚经金刚经呱唧呱唧呱唧呱唧就感觉感觉湖广会馆湖广会馆和韩庚韩庚韩庚韩庚韩寒"
-    },
-
     comments: [{
       id: 1,
       timestamp: new Date().getTime(),
@@ -46,11 +36,19 @@ class PostDetail extends Component {
     }]
   }
 
+  componentDidMount() {
+    this.props.getDetail(this.props.match.params.id).then((detail) => {
+      this.setState({
+        post: detail
+      })
+    })
+  }
+
   render() {
-    const post = this.state.post;
+    const { post, goBack }= this.props;
     return (
       <div className="post-detail">
-        <Header title="帖子详情" backLink="/category"/>
+        <Header title="帖子详情" backLink={true} goBack={goBack}/>
         <p className="post-header">
           <img alt="user" src={require('../cc-head.png')}/>
           <span>{post.author}</span>
