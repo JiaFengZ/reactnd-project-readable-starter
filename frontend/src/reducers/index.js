@@ -1,17 +1,13 @@
 import { combineReducers } from 'redux'
 
 import {
-  ADD_POST,
-  UPDATE_POST,
-  DELETE_POST,
-  UPDATE_POSTVOTE,
-  ADD_COMMENT,
-  UPDATE_COMMENT,
-  DELETE_COMMENT,
   GET_ALLPOSTS,
   GET_CATEGORYPOSTS,
   GET_POSTDETAIL,
-  GET_COMMENTS
+  GET_COMMENTS,
+  GET_CATEGORYS,
+  CHNAGE_RANKING,
+  CHNAGE_COMMENT_RANKING
 } from '../actions'
 
 const initialPostState = {
@@ -23,21 +19,6 @@ const initialPostState = {
 function post (state = initialPostState, action) {
   const { allPosts, categoryPosts, postDetail } = action
   switch (action.type) {
-    case ADD_POST:      
-
-      return {
-        ...state
-      }
-    case UPDATE_POST:      
-
-      return {
-        ...state
-      }
-    case DELETE_POST:      
-
-      return {
-        ...state
-      }
     case GET_ALLPOSTS:
       return {
         ...state,
@@ -53,11 +34,6 @@ function post (state = initialPostState, action) {
         ...state,
         postDetail: postDetail
       }
-    case UPDATE_POSTVOTE:
-      return {
-        ...state,
-        voteChange: true
-      }
     default:
       return state
   }
@@ -69,21 +45,6 @@ const commentState = {
 function comment (state = commentState, action) {
   const { comments } = action
   switch (action.type) {
-    case ADD_COMMENT:      
-
-      return {
-        ...state
-      }
-    case UPDATE_COMMENT:      
-
-      return {
-        ...state
-      }
-    case DELETE_COMMENT:      
-
-      return {
-        ...state
-      }
     case GET_COMMENTS:
       return {
         ...state,
@@ -94,7 +55,41 @@ function comment (state = commentState, action) {
   }
 }
 
+function category(state = {categories: []}, action) {
+  const { categories } = action
+  switch (action.type) {
+    case GET_CATEGORYS:
+      return {
+        ...state,
+        categories: categories
+      }
+    default :
+      return state
+  }
+}
+
+
+function ranking(state = {ranking: '评分', commentRanking:'评分'}, action) {
+  const { ranking, commentRanking } = action
+  switch (action.type) {
+    case CHNAGE_RANKING:
+      return {
+        ...state,
+        ranking: ranking
+      }
+    case CHNAGE_COMMENT_RANKING:
+      return {
+        ...state,
+        commentRanking: commentRanking
+      }
+    default :
+      return state
+  }
+}
+
 export default combineReducers({
   post,
   comment,
+  category,
+  ranking
 })

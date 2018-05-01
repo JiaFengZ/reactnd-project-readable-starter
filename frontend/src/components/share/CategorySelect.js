@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.css';
+import '../App.css';
 
 class CategorySelect extends Component {
   constructor(props) {
@@ -14,7 +14,8 @@ class CategorySelect extends Component {
   render() {
     return (
       
-      <select className="select-input" onChange={this.selectCateGory} value='none'>
+      <select className="select-input" onChange={this.selectCateGory} defaultValue={this.props.defaultValue||'none'}>
+        <option disabled value="none">请选择</option>
         {this.props.categorys.map((category) => <option key={category.path} value={category.path}>{category.name}</option>)}
       </select>
     )

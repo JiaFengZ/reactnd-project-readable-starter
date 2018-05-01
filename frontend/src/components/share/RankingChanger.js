@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './App.css';
+import '../App.css';
 
 class RankingChanger extends Component {
   constructor(props) {
@@ -13,11 +13,11 @@ class RankingChanger extends Component {
 
   render() {
     return (
-      <select className="select-input" onChange={this.changeRanking} value={this.props.value}>
+      <select className="select-input" onChange={this.changeRanking} defaultValue={this.props.value}>
         <option>评分</option><option>时间</option>
       </select>
     )
   }
 }
 
-export default RankingChanger;
+export default RankingChanger

@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
-import { updatePost, addPost } from '../API'
-import Header from './Header'
-import CategorySelect from './CategorySelect'
+import Header from './share/Header'
+import CategorySelect from './share/CategorySelect'
 import './App.css';
+
+function htmlEncode(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
 
 class PostEdit extends Component {
   constructor(props) {
@@ -26,31 +34,30 @@ class PostEdit extends Component {
     }
   }
 
-
+  categorySelect = "react"
   selectCateGory(category) {
     this.categorySelect = category
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const that = this
     if (this.props.match.params.id) {
-      updatePost(this.props.match.params.id, {
-        title: that.input.value,
-        body: that.textarea.value
+      this.props.updatePost(this.props.match.params.id, {
+        title: htmlEncode(this.input.value),
+        body: htmlEncode(this.textarea.value)
       }).then(() => {
-        that.props.goBack();
+        this.props.goBack();
       })
     } else {
-      addPost({
-        title: that.input.value,
-        body: that.textarea.value,
+      this.props.addPost({
+        title: htmlEncode(this.input.value),
+        body: htmlEncode(this.textarea.value),
         id: new Date().getTime(),
         timestamp: new Date().getTime(),
-        author: that.authorInput.value,
-        category: that.categorySelect
+        author: htmlEncode(this.authorInput.value),
+        category: this.categorySelect
       }).then(() => {
-        that.props.goBack();
+        this.props.goBack();
       })
     }
   }
@@ -60,11 +67,12 @@ class PostEdit extends Component {
     	<div>
     		<Header title="编辑帖子" backLink={true} goBack={this.props.goBack}/>    	
 	    	<form className="post-edit" onSubmit={this.handleSubmit}>
-	    		{this.state.isAdd&&(<p><label>作者：</label><input type="text" ref={(input) => this.authorInput = input}/></p>)}
-                     {this.state.isAdd&&(<p><label>标签：</label><CategorySelect categorys={this.props.categorys} selectCateGory={this.selectCateGory}/></p>)}
-                     <p><label>标题：</label><input type="text" defaultValue={this.state.post.title} ref={(input) => this.input = input}/></p>
-	    		<p><label>正文：</label><textarea row="4"defaultValue={this.state.post.body} ref={(textarea) => this.textarea = textarea}></textarea></p>
-	    		<button type="submit" className="submit-btn">确定</button><button className="cancel-btn"><a onClick={this.props.goBack}>取消</a></button>
+	    		{this.state.isAdd&&(<p><label>作者：</label><input required name="author" type="text" ref={(input) => this.authorInput = input}/></p>)}
+                     {this.state.isAdd&&(<p><label>标签：</label><CategorySelect defaultValue="react" categorys={this.props.categorys} selectCateGory={this.selectCateGory}/></p>)}
+                     <p><label>标题：</label><input required name="title" type="text" defaultValue={this.state.post.title} ref={(input) => this.input = input}/></p>
+	    		<p><label>正文：</label><textarea required title="body" row="4"defaultValue={this.state.post.body} ref={(textarea) => this.textarea = textarea}></textarea></p>
+	    		<button className="submit-btn" type="submit">确定</button>
+                     <button className="cancel-btn" onClick={(e) => {e.preventDefault();this.props.goBack()}}>取消</button>
 	    	</form>
     	</div>
     )

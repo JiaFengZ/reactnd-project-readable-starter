@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
-import Header from './Header'
-import PostList from './PostList'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { changeRanking } from '../actions'
+import Header from './share/Header'
+import PostList from './share/PostList'
+import RankingChanger from './share/RankingChanger'
 import './App.css';
 
 class PostCategory extends Component {
@@ -9,16 +12,35 @@ class PostCategory extends Component {
   }
 
   render() {
+    const posts = this.props.posts.sort((() => {
+        if (this.props.ranking === '评分') return (a, b) => b.voteScore - a.voteScore
+        else return (a, b) => b.timestamp - a.timestamp
+      })())
     return (
       <div className="category-container">
           <Header title="React" backLink={true} goBack={this.props.goBack}/>
           <div className="home-header"> 
-            <label>排序：</label><select className="select-input"><option>评分</option><option>时间</option></select>            
+            <label>排序：</label><RankingChanger value={this.props.ranking} changeRanking={this.props.changeRanking}/>            
           </div>
-          <PostList posts={this.props.posts}/>
+          <PostList posts={posts}/>
         </div>
     );
   }
 }
 
-export default PostCategory;
+function mapStateToProps ({ ranking }) { 
+  return {
+    ranking: ranking.ranking
+  }
+}
+
+function mapDispatchToProps (dispatch) { 
+  return {
+    changeRanking: (ranking) => dispatch(changeRanking(ranking)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostCategory)

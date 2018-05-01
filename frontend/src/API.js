@@ -77,20 +77,21 @@ export const addComment = (comment) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ comment })
+    body: JSON.stringify( comment )
   }).then(res => res.json())
 
 export const getCommentDetail = (id) =>
   fetch(`${api}/comments/${id}`, { headers })
     .then(res => res.json())
 
-export const voteComment = (id) =>
+export const voteComment = (id, type) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
-    }
+    },
+    body: JSON.stringify({ option: type })
   }).then(res => res.json())
 
 export const updateComment = (id, comment) =>
@@ -100,7 +101,7 @@ export const updateComment = (id, comment) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ comment })
+    body: JSON.stringify( comment )
   }).then(res => res.json())
 
 export const deleteComment = (id) =>

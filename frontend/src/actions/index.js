@@ -1,15 +1,40 @@
 import * as API from '../API'
-export const ADD_POST = 'ADD_POST'
-export const UPDATE_POST = 'UPDATE_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const UPDATE_COMMENT = 'UPDATE_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const GET_ALLPOSTS = 'GET_ALLPOSTS'
 export const GET_CATEGORYPOSTS = 'GET_CATEGORYPOSTS'
 export const GET_POSTDETAIL = 'GET_POSTDETAIL'
 export const GET_COMMENTS = 'GET_COMMENTS'
-export const UPDATE_POSTVOTE = 'UPDATE_POSTVOTE'
+export const GET_CATEGORYS = 'GET_CATEGORYS'
+export const CHNAGE_RANKING = 'CHNAGE_RANKING'
+export const CHNAGE_COMMENT_RANKING = 'CHNAGE_COMMENT_RANKING'
+
+function receiveCategorys(data) {
+   return {
+    type: GET_CATEGORYS,
+    categories: data
+  }
+}
+
+export function getCategories() {
+  return function (dispatch) {
+    return API.getCategories()
+      .then(data => dispatch(receiveCategorys(data)) //接收到数据
+      )
+  }
+}
+
+export function changeRanking(ranking) {
+   return {
+    type: CHNAGE_RANKING,
+    ranking: ranking
+  }
+}
+
+export function changeCommentRanking(ranking) {
+   return {
+    type: CHNAGE_COMMENT_RANKING,
+    commentRanking: ranking
+  }
+}
 
 function receivePosts(data) {
   return {
@@ -24,13 +49,8 @@ export function fetchAllPosts() {
   return function (dispatch) {
     //dispatch(requestPosts(subreddit)) 正在发起请求
     return API.getAllPosts()
-    .then(data => data.map((item) => {
-      if (item.timestamp) {
-        const date = new Date(item.timestamp)
-        item.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
-      }
-      return item
-    }))
+      .then(data => data.map((item) => formatDate(item)))
+      .then(data => data.filter((item) => !item.deleted))
       .then(data =>
         dispatch(receivePosts(data)) //接收到数据
       )
@@ -47,13 +67,7 @@ function receivePostsByCategory(data) {
 export function getPostsByCategory(category) {
   return function(dispatch) {
     return API.getPostsByCategory(category)
-    .then(data => data.map((item) => {
-      if (item.timestamp) {
-        const date = new Date(item.timestamp)
-        item.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() + ' ' + date.getHours() + ':' + date.getMinutes()
-      }
-      return item
-    }))
+    .then(data => data.map((item) => formatDate(item)))
     .then(data => dispatch(receivePostsByCategory(data)))
   }
 }
@@ -68,38 +82,61 @@ function receivePostDetail(data) {
 export function getPostDetail(id) {
   return function(dispatch) {
     return API.getPostDetail(id)
+    .then((data) => formatDate(data))
     .then(data => dispatch(receivePostDetail(data)))
   }
 }
 
-function updatePostVote() {
-  return {
-    type: UPDATE_POSTVOTE
-  }
-}
 
-export function votePost(id, type) {
+export function upVotePost(post) {
   return function(dispatch) {
-    return API.votePost(id, type)
-    .then(data => dispatch(updatePostVote()))
+    return API.votePost(post.id, 'upVote')
+    .then(data => dispatch(getPostDetail(post.id)))
+    .then(() => {dispatch(fetchAllPosts());dispatch(getPostsByCategory(post.category))})
   }
 }
 
-export function addPost ({}) {
-  return {
-    type: ADD_POST,
+export function downVotePost(post) {
+  return function(dispatch) {
+    return API.votePost(post.id, 'downVote')
+    .then(data => dispatch(getPostDetail(post.id)))
+    .then(() => {dispatch(fetchAllPosts());dispatch(getPostsByCategory(post.category))})
   }
 }
 
-export function updatePost ({}) {
-  return {
-    type: UPDATE_POST,
+export function addPost (post) {
+  return function(dispatch) {
+    return API.addPost(post)
+    .then(data => {dispatch(fetchAllPosts());dispatch(getPostsByCategory(post.category))})
   }
 }
 
-export function deletePost ({}) {
-  return {
-    type: DELETE_POST,
+export function updatePost (id, post) {
+  return function(dispatch) {
+    return API.updatePost(id, post)
+    .then(data => dispatch(getPostDetail(id)))
+    .then(data => {dispatch(fetchAllPosts());dispatch(getPostsByCategory(data.category))})
+  }
+}
+
+export function deletePost (post) {
+  return function(dispatch) {
+    return API.deletePost(post.id)
+    .then(data => {dispatch(fetchAllPosts());dispatch(getPostsByCategory(post.category))})
+  }
+}
+
+export function upVoteComment(id, postId) {
+  return function(dispatch) {
+    return API.voteComment(id, 'upVote')
+    .then(data => dispatch(getComments(postId)))
+  }
+}
+
+export function downVoteComment(id, postId) {
+  return function(dispatch) {
+    return API.voteComment(id, 'downVote')
+    .then(data => dispatch(getComments(postId)))
   }
 }
 
@@ -113,24 +150,37 @@ function receiveComments (data) {
 export function getComments(id) {
   return function(dispatch) {
     return API.getComments(id)
+    .then(data => data.map((item) => formatDate(item)))
     .then(data => dispatch(receiveComments(data)))
   }
 }
 
-export function addComment ({}) {
-  return {
-    type: ADD_COMMENT,
+export function addComment (comment) {
+  return function(dispatch) {
+    return API.addComment(comment)
+    .then(data => dispatch(getComments(comment.parentId)))
   }
 }
 
-export function updateComment ({}) {
-  return {
-    type: UPDATE_COMMENT,
+export function updateComment (postId, commentId, comment) {
+  return function(dispatch) {
+    return API.updateComment(commentId, comment)
+    .then(data => dispatch(getComments(postId)))
   }
 }
 
-export function deleteComment ({}) {
-  return {
-    type: DELETE_COMMENT,
+export function deleteComment (id, parentId) {
+  return function(dispatch) {
+    return API.deleteComment(id)
+    .then(data => dispatch(getComments(parentId)))
   }
+}
+
+
+function formatDate(data) {
+  if (data.timestamp) {
+    const date = new Date(data.timestamp)
+    data.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+  }
+  return data
 }
