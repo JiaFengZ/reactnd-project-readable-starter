@@ -21,5 +21,7 @@
 * get posts
 * get comments
 
-## todo
-编辑帖子后，如何更新前一页的post状态  页面横向滚动条问题  代码值合法性检查
+## 项目运行
+* 开发调试 npm run start
+* 打包 npm run build
+

@@ -26,10 +26,9 @@ class PostEdit extends Component {
 
   componentDidMount() {
     if (!this.state.post.id && !this.state.isAdd) {
-      const that = this
       this.props.getDetail(this.props.match.params.id).then((res) => {
-        that.input.value = res.postDetail.title
-        that.textarea.value = res.postDetail.body
+        this.input.value = res.postDetail.title
+        this.textarea.value = res.postDetail.body
       })
     }
   }
@@ -68,11 +67,11 @@ class PostEdit extends Component {
     		<Header title="编辑帖子" backLink={true} goBack={this.props.goBack}/>    	
 	    	<form className="post-edit" onSubmit={this.handleSubmit}>
 	    		{this.state.isAdd&&(<p><label>作者：</label><input required name="author" type="text" ref={(input) => this.authorInput = input}/></p>)}
-                     {this.state.isAdd&&(<p><label>标签：</label><CategorySelect defaultValue="react" categorys={this.props.categorys} selectCateGory={this.selectCateGory}/></p>)}
-                     <p><label>标题：</label><input required name="title" type="text" defaultValue={this.state.post.title} ref={(input) => this.input = input}/></p>
+          {this.state.isAdd&&(<p><label>标签：</label><CategorySelect defaultValue="react" categorys={this.props.categorys} selectCateGory={this.selectCateGory}/></p>)}
+          <p><label>标题：</label><input required name="title" type="text" defaultValue={this.state.post.title} ref={(input) => this.input = input}/></p>
 	    		<p><label>正文：</label><textarea required title="body" row="4"defaultValue={this.state.post.body} ref={(textarea) => this.textarea = textarea}></textarea></p>
 	    		<button className="submit-btn" type="submit">确定</button>
-                     <button className="cancel-btn" onClick={(e) => {e.preventDefault();this.props.goBack()}}>取消</button>
+          <button className="cancel-btn" onClick={(e) => {e.preventDefault();this.props.goBack()}}>取消</button>
 	    	</form>
     	</div>
     )

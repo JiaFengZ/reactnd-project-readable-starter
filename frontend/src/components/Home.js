@@ -20,10 +20,10 @@ class HomePage extends Component {
   }
 
   render() {
-    const posts = this.props.posts.sort((() => {
+    const posts = Array.isArray(this.props.posts) ? this.props.posts.sort((() => {
         if (this.props.ranking === '评分') return (a, b) => b.voteScore - a.voteScore
         else return (a, b) => b.timestamp - a.timestamp
-      })())
+      })()) : []
       return (
         <div className="Home">
           <Header title="所有帖子"/>

@@ -12,13 +12,13 @@ class PostCategory extends Component {
   }
 
   render() {
-    const posts = this.props.posts.sort((() => {
+    const posts = Array.isArray(this.props.posts) ? this.props.posts.sort((() => {
         if (this.props.ranking === '评分') return (a, b) => b.voteScore - a.voteScore
         else return (a, b) => b.timestamp - a.timestamp
-      })())
+      })()) : []
     return (
       <div className="category-container">
-          <Header title="React" backLink={true} goBack={this.props.goBack}/>
+          <Header title={this.props.match.params.category} backLink={true} goBack={this.props.goBack}/>
           <div className="home-header"> 
             <label>排序：</label><RankingChanger value={this.props.ranking} changeRanking={this.props.changeRanking}/>            
           </div>

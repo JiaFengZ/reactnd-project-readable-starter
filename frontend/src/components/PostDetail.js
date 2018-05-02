@@ -77,10 +77,10 @@ class PostDetail extends Component {
   render() {
     const goBack = this.props.goBack
     const post = this.props.postDetail
-    const comments = this.props.comments.sort((() => {
+    const comments = Array.isArray(this.props.comments) ? this.props.comments.sort((() => {
         if (this.props.commentRanking === '评分') return (a, b) => b.voteScore - a.voteScore
         else return (a, b) => b.timestamp - a.timestamp
-      })())
+      })()) : []
     return (
       <div className="post-detail">
         <Header title="帖子详情" backLink={true} goBack={goBack}/>
