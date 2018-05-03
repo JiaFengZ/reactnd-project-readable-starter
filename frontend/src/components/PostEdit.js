@@ -1,16 +1,8 @@
 import React, { Component } from 'react'
 import Header from './share/Header'
 import CategorySelect from './share/CategorySelect'
-import './App.css';
-
-function htmlEncode(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
+import './App.css'
+import * as Helper from '../helper'
 
 class PostEdit extends Component {
   constructor(props) {
@@ -42,18 +34,18 @@ class PostEdit extends Component {
     event.preventDefault();
     if (this.props.match.params.id) {
       this.props.updatePost(this.props.match.params.id, {
-        title: htmlEncode(this.input.value),
-        body: htmlEncode(this.textarea.value)
+        title: Helper.htmlEncode(this.input.value),
+        body: Helper.htmlEncode(this.textarea.value)
       }).then(() => {
         this.props.goBack();
       })
     } else {
       this.props.addPost({
-        title: htmlEncode(this.input.value),
-        body: htmlEncode(this.textarea.value),
+        title: Helper.htmlEncode(this.input.value),
+        body: Helper.htmlEncode(this.textarea.value),
         id: new Date().getTime(),
         timestamp: new Date().getTime(),
-        author: htmlEncode(this.authorInput.value),
+        author: Helper.htmlEncode(this.authorInput.value),
         category: this.categorySelect
       }).then(() => {
         this.props.goBack();

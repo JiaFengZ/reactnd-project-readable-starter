@@ -17,6 +17,13 @@ img {
   vertical-align: middle;
 }
 
+.not-fount {
+  text-align: center;
+  color: #d68b8b;
+  font-size: 1.5rem;
+  margin-top: 100px;
+}
+
 .App-header {
   padding: 10px;
   height: 60px;

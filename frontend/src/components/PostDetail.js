@@ -4,16 +4,8 @@ import { connect } from 'react-redux'
 import { upVoteComment, downVoteComment, upVotePost, downVotePost, getPostDetail, deletePost, getComments, addComment, updateComment, deleteComment, changeCommentRanking } from '../actions'
 import Header from './share/Header'
 import RankingChanger from './share/RankingChanger'
-import './App.css';
-
-function htmlEncode(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-}
+import './App.css'
+import * as Helper from '../helper'
 
 class PostDetail extends Component {
 
@@ -27,14 +19,14 @@ class PostDetail extends Component {
   }  
 
   deletePost(post) {
-    this.props.deletePost(post).then(() => this.props.goBack())
+    this.props.deletePost(post).then(() => this.props.history.goBack())
   }
 
   postComment() {
     if (this.curCommentId) {
       this.props.updateComment(this.props.postDetail.id, this.curCommentId, {
         timestamp: new Date().getTime(),
-        body: htmlEncode(this.commentInput.value)
+        body: Helper.htmlEncode(this.commentInput.value)
       }).then(() => {
         this.commentInput.value = ''
         this.curCommentId = null
@@ -43,7 +35,7 @@ class PostDetail extends Component {
       this.props.addComment({
         id: new Date().getTime(),
         timestamp: new Date().getTime(),
-        body: htmlEncode(this.commentInput.value),
+        body: Helper.htmlEncode(this.commentInput.value),
         author: '匿名用户',
         parentId: this.props.postDetail.id
       }).then(() => {
@@ -70,12 +62,14 @@ class PostDetail extends Component {
   }
 
   componentDidMount() {
-    this.props.getDetail(this.props.match.params.id)
+    this.props.getDetail(this.props.match.params.id).then((post) => {
+      if (!post.postDetail.id) this.props.history.replace('/notfound')
+    })
     this.props.getComments(this.props.match.params.id)
   }
 
   render() {
-    const goBack = this.props.goBack
+    const goBack = this.props.history.goBack
     const post = this.props.postDetail
     const comments = Array.isArray(this.props.comments) ? this.props.comments.sort((() => {
         if (this.props.commentRanking === '评分') return (a, b) => b.voteScore - a.voteScore

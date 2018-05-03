@@ -1,16 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../App.css';
 
-class Header extends Component {
-
-  render() {
-    return (
+export default function Header(props) {
+   return (
     	<div className="App-header">
-        {this.props.backLink && <i onClick={this.props.goBack} className="nav-link"><img alt="goback" src={require('../../images/goback.png')}/></i>}
-        <span>{this.props.title}</span>
-      </div>
+        	{props.backLink && <i onClick={props.goBack} className="nav-link"><img alt="goback" src={require('../../images/goback.png')}/></i>}
+        	<span>{props.title}</span>
+      	</div>
     )
-  }
 }
 
-export default Header;

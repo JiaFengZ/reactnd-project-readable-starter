@@ -7,6 +7,7 @@ import HomePage from './Home'
 import PostCategory from './PostCategory'
 import PostDetail from './PostDetail'
 import PostEdit from './PostEdit' 
+import NotFount from './share/NotFount'
 
 class App extends Component {
 
@@ -22,11 +23,12 @@ class App extends Component {
           <Switch>
               <Route exact path='/' render={(props) => <HomePage history={props.history} categorys={this.props.category.categories} posts={this.props.post.allPosts}/>} />
               <Route path='/:category/posts' render={(props) => <PostCategory match={props.match} goBack={props.history.goBack} getPosts={this.props.getPostsByCategory} posts={this.props.post.categoryPosts}/>} />
-              <Route path='/posts/:id' render={(props) => <PostDetail match={props.match} goBack={props.history.goBack} />}/>
+              <Route path='/posts/:id' render={(props) => <PostDetail match={props.match} history={props.history}/>}/>
               <Route path='/edit/:id' render={(props) => <PostEdit match={props.match} updatePost = {this.props.updatePost}
-                goBack={props.history.goBack} post={this.props.post.postDetail}  getDetail={this.props.getPostDetail}/>}/>
+                 goBack={props.history.goBack} post={this.props.post.postDetail}  getDetail={this.props.getPostDetail}/>}/>
               <Route path='/add' render={(props) => <PostEdit match={props.match} addPost = {this.props.addPost}
                 goBack={props.history.goBack} categorys={this.props.category.categories}/>}/>
+              <Route path='/notfound' component={NotFount}/>
           </Switch>
         </BrowserRouter>
     )
