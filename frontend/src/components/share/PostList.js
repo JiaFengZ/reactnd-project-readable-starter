@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import '../App.css';
-
-function trim (str) {
-  return str.length > 100
-    ? str.slice(0, 100) + '...'
-    : str
-}
+import '../App.css'
+import * as Helper from '../../helper'
 
 class PostList extends Component {
 
@@ -23,7 +18,7 @@ class PostList extends Component {
                     <span className="type-tab">{post.category}</span>
                   </div>
                   <div className="post-title">{post.title}</div>
-                  <div className="post-profile">{trim(post.body)}</div>
+                  <div className="post-profile">{Helper.trim(post.body)}</div>
                   <span className="vote-score"><img alt="vote" src={require('../../images/love.png')}/>{post.voteScore}</span>
                   <Link to={'/posts/'+post.id} className="detail-tab"><img alt="detail" src={require('../../images/detail-icon.png')}/></Link>
                 </li>)

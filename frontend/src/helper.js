@@ -6,3 +6,9 @@ export function htmlEncode(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 }
+
+export function trim (str) {
+  return str.length > 100
+    ? str.slice(0, 100) + '...'
+    : str
+}
