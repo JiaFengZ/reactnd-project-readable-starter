@@ -19,7 +19,6 @@
     - `npm install`
     - `node server`
 * 启动前端开发服务器
-    - `create-react-app frontend`
     - `cd frontend`
     - `npm start`
 
